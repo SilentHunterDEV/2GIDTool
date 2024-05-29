@@ -1,4 +1,4 @@
-iPhone 2G ID Tool
+# iPhone 2G ID Tool
 A tool to provide information about an iPhone 2G based on serial number.
 
 -Usage-
@@ -23,5 +23,5 @@ u/SilentHunterDEV- code.
 
 u/SilentHunterDEV - Idea for the program and information regarding iPhone 2G serial numbers.
 
-u/Yupiter.de - Testing
+u/Yupiter.de - Naming and testing
 
