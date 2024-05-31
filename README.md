@@ -23,5 +23,5 @@ u/SilentHunterDEV- code.
 
 u/SilentHunterDEV - Idea for the program and information regarding iPhone 2G serial numbers.
 
-u/Yupiter.de - testing
+u/Yupiter - testing
 
