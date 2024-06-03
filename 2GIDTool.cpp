@@ -34,7 +34,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	displayInfo(serialNumber, prodWeek, prodYear);
 
 	std::cout << "Press enter to exit.\n" << std::endl;
-	cin.get();
+	std::cin.get();
 	return 0;
 }
 
