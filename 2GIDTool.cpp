@@ -50,10 +50,11 @@ void importSerialNumber(char serialNumber[11]) {  // This function will write th
 }
 
 void displaySerialNumber(char serialNumber[11]) { // This function will print the serial number of the device
-	std::cout << "Serial Number: " << std::endl;
-	for (int i = 0; i < 11; i++) { // For loop to print serial number
-		std::cout << serialNumber[i] << std::endl;
-	}
+    std::cout << "Serial Number: ";
+    for (int i = 0; i < 11; i++) {
+        std::cout << serialNumber[i];
+    }
+    std::cout << std::endl;
 }
 
 void InvalidErrorHandler() {
