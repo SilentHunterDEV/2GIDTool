@@ -8,8 +8,8 @@
 
 using namespace std;
 
-void importSerial(char serialNumber[11]); // This function will write the desired serial number to the array "serialNumber"
-void displaySerial(char serialNumber[11]); // This function will print the serial number of the device
+void importSerialNumber(char serialNumber[11]); // This function will write the desired serial number to the array "serialNumber"
+void displaySerialNumber(char serialNumber[11]); // This function will print the serial number of the device
 void displayInfo(char serialNumber[11], int prodWeek, int prodYear); // This function will print device info
 int productionWeek(char serialNumber[11]); // This function will return the production week of an iPhone
 int productionYear(char serialNumber[11]); // This function will return the production year of an iPhone
@@ -24,9 +24,9 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 
 	std::cout << "iPhone2G ID Tool - iPhone v1.0\n" << std::endl;
 	std::cout << "This utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
-	std::cout << "Please input your iPhone's Serial number.\n" << "Serial number: \n" << std::endl;
-	importSerial(serialNumber); // Prompt the user for the Serial number
-	std::cin.get();
+	std::cout << "Please input your iPhone's Serial number.\n" << "" << std::endl;
+	importSerialNumber(serialNumber); // Prompt the user for the Serial number
+	//std::cin.get();
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
 	prodYear = productionYear(serialNumber); // calculate the production year
@@ -39,13 +39,13 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	return 0;
 }
 
-void importSerial(char serialNumber[11]) {  // This function will write the desired serial number to the array "serialNumber"
+void importSerialNumber(char serialNumber[11]) {  // This function will write the desired serial number to the array "serialNumber"
 	for (int i = 0; i < 11; i++) { // For loop to fill character array with serial number
 		cin >> serialNumber[i];
 	}
 }
 
-void displaySerial(char serialNumber[11]) { // This function will print the serial number of the device
+void displaySerialNumber(char serialNumber[11]) { // This function will print the serial number of the device
 	std::cout << "Serial Number: " << std::endl;
 	for (int i = 0; i < 11; i++) { // For loop to print serial number
 		std::cout << serialNumber[i] << std::endl;
@@ -59,7 +59,7 @@ void InvalidErrorHandler() {
 }
 
 void displayInfo(char serialNumber[11], int prodWeek, int prodYear) { // This function will print device info
-	displaySerial(serialNumber); // Print the devices serial number
+	displaySerialNumber(serialNumber); // Print the devices serial number
 	cout << "\n";
 
 	if (prodWeek == 0 || prodYear == 0) { // Check if serial is valid by making sure that productionWeek did not return 0
@@ -82,7 +82,7 @@ int productionWeek(char serialNumber[11]) { // This function will return the pro
 	week = ((static_cast <int> (serialNumber[3]) - 48) * 10) + (static_cast <int> (serialNumber[4]) - 48);
 	
 	if (week > 52 || week <= 0) {
-		return 0; // Program will return an error
+		return 0;
 	}
 	else {
 
@@ -91,8 +91,8 @@ int productionWeek(char serialNumber[11]) { // This function will return the pro
 	}
 }
 
-int productionYear(char serialNumber[11]) { //This function will return the production year of an iPhone
-	switch ((static_cast <int> (serialNumber[2]) - 48)) //convert third digit in serial number from ascii character to int
+int productionYear(char serialNumber[11]) { // This function will return the production year of an iPhone
+	switch ((static_cast <int> (serialNumber[2]) - 48)) // convert third digit in serial number from ascii character to int
 	{
 	
 	case 7:
