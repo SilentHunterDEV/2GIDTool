@@ -28,7 +28,6 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	std::cout << "This Utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
 	std::cout << "Please input your iPhone's Serial number.\n" << "" << std::endl;
 	importSerialNumber(serialNumber); // Prompt the user for the Serial number
-	std::cin.get();
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
 	prodYear = productionYear(serialNumber); // calculate the production year
@@ -46,14 +45,14 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 void importSerialNumber(char serialNumber[11]) {
     bool validInput = false;
     while (!validInput) {
-        cout << "Enter the serial number (11 characters): ";
+        cout << "Enter the serial number (11 characters): \n";
         string input_serialnumber;
         getline(cin, input_serialnumber);
 
         if (input_serialnumber.length() == 0) {
-            cout << "Error: Serial number cannot be empty." << endl;
+            cout << "Error: Serial number cannot be empty.\f" << endl;
         } else if (input_serialnumber.length() != 11) {
-            cout << "Error: Serial number must be 11 characters long." << endl;
+            cout << "Error: Serial number must be 11 characters long.\f" << endl;
         } else {
             for (int i = 0; i < 11; i++) {
                 serialNumber[i] = input_serialnumber[i];
