@@ -24,7 +24,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 
 	std::cout << "iPhone2G ID Tool - iPhone v1.0\n" << std::endl;
 	std::cout << "This utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
-	std::cout << "Please input your iPhone's Serial number.\n" << "Serial: \n" << std::endl;
+	std::cout << "Please input your iPhone's Serial number.\n" << "Serial number: \n" << std::endl;
 	importSerial(serialNumber); // Prompt the user for the Serial number
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
