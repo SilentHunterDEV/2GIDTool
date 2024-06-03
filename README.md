@@ -29,3 +29,11 @@ u/SilentHunterDEV - Idea for the program and information regarding iPhone 2G ser
 
 u/Yupiter - testing
 
+# Support platforms
+- Windows
+- Linux
+- MacOS
+
+# Planned to be supported platforms
+- Android
+- iOS (eventually)
