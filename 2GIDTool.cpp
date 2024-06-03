@@ -35,7 +35,6 @@ int main() {
 
 	cout << "Press enter to exit.\n";
 	cin.get();
-	cin.get();
 	return 0;
 }
 
