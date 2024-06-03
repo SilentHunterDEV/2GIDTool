@@ -22,19 +22,19 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	int prodWeek = 0; // Create an int to store production week
 	int prodYear = 0; // Create an int to store production year
 
-	cout << "iPhone2G ID Tool - iPhone\n";
-	cout << "This utility will output basic information about an iPhone 2G based on its serial number\n";
-	cout << "Please input your iPhone's serial number.\n" << "Serial: ";
+	std::cout << "iPhone2G ID Tool - iPhone\n";
+	std::cout << "This utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
+	std::cout << "Please input your iPhone's serial number.\n" << "Serial: " << std::endl;
 	importSerial(serialNumber); // Prompt the user for the serial number
 	cout << "\n";
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
 	prodYear = productionYear(serialNumber); // calculate the production year
 
-	std::cout << "Device information:\n"  ;;
+	std::cout << "Device information:\n" << std::endl;
 	displayInfo(serialNumber, prodWeek, prodYear);
 
-	cout << "Press enter to exit.\n";
+	std::cout << "Press enter to exit.\n" << std::endl;
 	cin.get();
 	return 0;
 }
@@ -46,9 +46,9 @@ void importSerial(char serialNumber[11]) {  // This function will write the desi
 }
 
 void displaySerial(char serialNumber[11]) { // This function will print the serial number of the device
-	cout << "Serial Number: ";
+	std::cout << "Serial Number: " << std::endl;
 	for (int i = 0; i < 11; i++) { // For loop to print serial number
-		cout << serialNumber[i];
+		std::cout << serialNumber[i] << std::endl;
 	}
 }
 
@@ -57,16 +57,16 @@ void displayInfo(char serialNumber[11], int prodWeek, int prodYear) { // This fu
 	cout << "\n";
 
 	if (prodWeek == 0 || prodYear == 0) { // Check if serial is valid by making sure that productionWeek did not return 0
-		cout << "Error: Invalid or Unknown Serial number. If you believe this is in error, please contact u/randomNinja64\n";
+		std::cout << "Error: Invalid or Unknown Serial number. If you believe this is in error, please contact u/randomNinja64\n " << std::endl;
 		return;
 	}
 	else {
-		cout << "Production Week: " << prodWeek << "\n"; // print production week
-		cout << "Production Month / Year: " << prodWeekToMonth(prodWeek) << " " << prodYear << "\n"; // print production year
+		std::cout << "Production Week: " << prodWeek << "\n" << std::endl; // print production week
+		std::cout << "Production Month / Year: " << prodWeekToMonth(prodWeek) << " " << prodYear << "\n" << std::endl; // print production year
 	}
 
-	cout << "Original Bootloader Version: " << calcBL(prodWeek, prodYear) << "\n";  // use calcBL to determine bootloader version
-	cout << "Minimum OS Version: " << calcMinOS(prodWeek, prodYear) << "\n"; // use calcMinOS to determine minimum OS version
+	std::cout << "Original Bootloader Version: " << calcBL(prodWeek, prodYear) << "\n" << std::endl;  // use calcBL to determine bootloader version
+	std::cout << "Minimum OS Version: " << calcMinOS(prodWeek, prodYear) << "\n" << std::endl; // use calcMinOS to determine minimum OS version
 }
 
 int productionWeek(char serialNumber[11]) { // This function will return the production week of an iPhone
@@ -79,7 +79,7 @@ int productionWeek(char serialNumber[11]) { // This function will return the pro
 		return 0; // Program will return an error
 	}
 	else {
-		return week;
+	return week;
 	}
 }
 
@@ -98,7 +98,7 @@ float calcBL(int prodWeek, int prodYear) { // This function wll return bootloade
 		return 4.6;
 	}
 	else {
-		return 3.9;
+	return 3.9;
 	}
 }
 
@@ -107,8 +107,11 @@ string calcMinOS(int prodWeek, int prodYear) { // This function will return mini
 		return "Firmware 1.0";
 	}
 	else {
-		return "Firmware 1.1.1";
+
+	return "Firmware 1.1.1";
+	
 	}
+
 }
 
 string prodWeekToMonth(int prodWeek) { // This function will convert production week to month
