@@ -86,8 +86,13 @@ int productionWeek(char serialNumber[11]) { // This function will return the pro
 int productionYear(char serialNumber[11]) { //This function will return the production year of an iPhone
 	switch ((static_cast <int> (serialNumber[2]) - 48)) //convert third digit in serial number from ascii character to int
 	{
-	case 7: return 2007; // if digit 3 is 7, production year is 2007
-	case 8: return 2008; // if digit 3 is 8, production year is 2008
+	
+	case 7:
+	return 2007; // if digit 3 is 7, production year is 2007
+	
+	case 8: 
+	return 2008; // if digit 3 is 8, production year is 2008
+	
 	default:
 	return 0; // if neither, return 0 causing an error
 	}
