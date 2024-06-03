@@ -1,2 +1,6 @@
 
 2GIDTool.exe
+
+# MSVC related Files/Folders
+./Debug
+./Release
