@@ -26,6 +26,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	std::cout << "This utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
 	std::cout << "Please input your iPhone's Serial number.\n" << "Serial number: \n" << std::endl;
 	importSerial(serialNumber); // Prompt the user for the Serial number
+	std::cin.get();
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
 	prodYear = productionYear(serialNumber); // calculate the production year
@@ -51,12 +52,18 @@ void displaySerial(char serialNumber[11]) { // This function will print the seri
 	}
 }
 
+void InvalidErrorHandler() {
+	std::cout << "Error: Invalid or unknown Serial number.\n " << std::endl;
+	std::cout << "If you believe this is in error, Please contact SilentHunterDEV or BJNFNE on Discord over an Direct Message.\n";
+	return;
+}
+
 void displayInfo(char serialNumber[11], int prodWeek, int prodYear) { // This function will print device info
 	displaySerial(serialNumber); // Print the devices serial number
 	cout << "\n";
 
 	if (prodWeek == 0 || prodYear == 0) { // Check if serial is valid by making sure that productionWeek did not return 0
-		std::cout << "Error: Invalid or Unknown Serial number. If you believe this is in error, please contact u/randomNinja64\n " << std::endl;
+		InvalidErrorHandler();
 		return;
 	}
 	else {
