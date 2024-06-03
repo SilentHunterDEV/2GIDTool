@@ -13,7 +13,7 @@ void displaySerial(char serialNumber[11]); // This function will print the seria
 void displayInfo(char serialNumber[11], int prodWeek, int prodYear); // This function will print device info
 int productionWeek(char serialNumber[11]); // This function will return the production week of an iPhone
 int productionYear(char serialNumber[11]); // This function will return the production year of an iPhone
-float calcBL(int prodWeek, int prodYear); // This function wll return bootloader based on production week and year
+float distgunishBootLoader(int prodWeek, int prodYear); // This function wll return bootloader based on production week and year
 string calcMinOS(int prodWeek, int prodYear); // This function will return minimum OS version
 string prodWeekToMonth(int prodWeek); // This function will convert production week to month
 	
@@ -64,7 +64,7 @@ void displayInfo(char serialNumber[11], int prodWeek, int prodYear) { // This fu
 		std::cout << "Production Month / Year: " << prodWeekToMonth(prodWeek) << " " << prodYear << "\n" << std::endl; // print production year
 	}
 
-	std::cout << "Original Bootloader Version: " << calcBL(prodWeek, prodYear) << "\n" << std::endl;  // use calcBL to determine bootloader version
+	std::cout << "Original Bootloader Version: " << distgunishBootLoader(prodWeek, prodYear) << "\n" << std::endl;  // use distgunishBootLoader to distgunish bootloader version
 	std::cout << "Minimum OS Version: " << calcMinOS(prodWeek, prodYear) << "\n" << std::endl; // use calcMinOS to determine minimum OS version
 }
 
@@ -99,7 +99,7 @@ int productionYear(char serialNumber[11]) { //This function will return the prod
 	}
 }
 
-float calcBL(int prodWeek, int prodYear) { // This function wll return bootloader based on production week and year
+float distgunishBootLoader(int prodWeek, int prodYear) { // This function wll return bootloader based on production week and year
 	if ((prodWeek >= 45 && prodYear == 2007) || (prodYear == 2008)) { //if production week 45 or above and production year is 2007, or if production year is 2008, bootloader us 4.6
 		return 4.6;
 	}
