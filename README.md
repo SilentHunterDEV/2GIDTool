@@ -20,6 +20,7 @@ Minimum OS Version - The lowest version of iPhone OS that the device can be down
 -Credits-
 
 u/SilentHunterDEV- code.
+u/BJNFNE- code.
 
 u/SilentHunterDEV - Idea for the program and information regarding iPhone 2G serial numbers.
 
