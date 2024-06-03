@@ -45,14 +45,14 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 void importSerialNumber(char serialNumber[11]) {
     bool validInput = false;
     while (!validInput) {
-        cout << "Enter the serial number (11 characters): \n";
+        std::cout << "Enter the serial number (11 characters): \n" << std::endl;
         string input_serialnumber;
         getline(cin, input_serialnumber);
 
         if (input_serialnumber.length() == 0) {
-            cout << "Error: Serial number cannot be empty.\f" << endl;
+            std::cout << "Error: Serial number cannot be empty.\f" << std::endl;
         } else if (input_serialnumber.length() != 11) {
-            cout << "Error: Serial number must be 11 characters long.\f" << endl;
+            std::cout << "Error: Serial number must be 11 characters long.\f" << std::endl;
         } else {
             for (int i = 0; i < 11; i++) {
                 serialNumber[i] = input_serialnumber[i];
