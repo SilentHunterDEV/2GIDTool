@@ -1,5 +1,5 @@
 // iPhone 2G ID Tool
-//This tool will provide info about an iphone 2g based on serial number
+//This tool will provide info about an iPhone 2G based on serial number
 //Idea credited to u/random_user_online
 //Initial code credited to u/randomNinja64
 
@@ -16,12 +16,13 @@ int productionYear(char serialNumber[11]); //This function will return the produ
 float calcBL(int prodWeek, int prodYear); //This function wll return bootloader based on production week and year
 string calcMinOS(int prodWeek, int prodYear); //This function will return minimum OS version
 string prodWeekToMonth(int prodWeek); //this function will convert production week to month
-int main() {
+	
+	int main() {
 	char serialNumber[11] = { '0' }; //11 character long array to store iPhone 2G serial number
 	int prodWeek = 0; //Create an int to store production week
 	int prodYear = 0; //Create an int to store production year
 
-	cout << "Iphone2G ID Tool - iPhone\n";
+	cout << "iPhone2G ID Tool - iPhone\n";
 	cout << "This utility will output basic information about an iPhone 2G based on its serial number\n";
 	cout << "Please input your iPhone's serial number.\n" << "Serial: ";
 	importSerial(serialNumber); //Prompt the user for the serial number
@@ -34,7 +35,6 @@ int main() {
 	displayInfo(serialNumber, prodWeek, prodYear);
 
 	cout << "Press enter to exit.\n";
-	cin.get();
 	cin.get();
 	return 0;
 }
@@ -89,7 +89,7 @@ int productionYear(char serialNumber[11]) { //This function will return the prod
 	case 7: return 2007; //if digit 3 is 7, production year is 2007
 	case 8: return 2008; //if digit 3 is 8, production year is 2008
 	default:
-		return 0; //if neither, return 0 causing an error
+	return 0; //if neither, return 0 causing an error
 	}
 }
 
@@ -151,4 +151,5 @@ string prodWeekToMonth(int prodWeek) { //this function will convert production w
 	else {
 		return "Unknown";
 	}
-}
+	return 0;
+} // End of namespace
