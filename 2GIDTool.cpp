@@ -1,7 +1,7 @@
 // iPhone 2G ID Tool v1.0
 // This tool will provide info about an iPhone 2G based on serial number
-// Idea credited to u/random_user_online
-// Initial code credited to u/randomNinja64
+// Idea credited to u/SilentHunterDEV
+// Initial code credited to u/SilentHunterDEV & u/BJNFNE
 
 #include <iostream>
 #include <string>
@@ -43,11 +43,24 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	return 0;
 }
 
-void importSerialNumber(char serialNumber[11]) {  // This function will write the desired serial number to the array "serialNumber"
-	for (int i = 0; i < 11; i++) { // For loop to fill character array with serial number
-		cin >> serialNumber[i];
-	}
+void importSerialNumber(char serialNumber[11]) {
+    bool validInput = false;
+    while (!validInput) {
+        cout << "Enter the serial number (11 characters): ";
+        string input;
+        cin >> input;
+
+        if (input.length() != 11) {
+            cout << "Error: Serial number must be 11 characters long." << endl;
+        } else {
+            for (int i = 0; i < 11; i++) {
+                serialNumber[i] = input[i];
+            }
+            validInput = true;
+        }
+    }
 }
+
 
 void displaySerialNumber(char serialNumber[11]) { // This function will print the serial number of the device
     std::cout << "Serial Number: ";
