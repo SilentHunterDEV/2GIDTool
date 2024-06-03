@@ -26,7 +26,6 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	std::cout << "This utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
 	std::cout << "Please input your iPhone's serial number.\n" << "Serial: " << std::endl;
 	importSerial(serialNumber); // Prompt the user for the serial number
-	cout << "\n";
 
 	prodWeek = productionWeek(serialNumber); // calculate the production week
 	prodYear = productionYear(serialNumber); // calculate the production year
@@ -79,7 +78,9 @@ int productionWeek(char serialNumber[11]) { // This function will return the pro
 		return 0; // Program will return an error
 	}
 	else {
+
 	return week;
+
 	}
 }
 
