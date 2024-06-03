@@ -1,4 +1,4 @@
-# iPhone 2G ID Tool
+# iPhone 2G ID Tool v1.0
 A tool to provide information about an iPhone 2G based on serial number.
 
 -Usage-
@@ -20,6 +20,10 @@ Minimum OS Version - The lowest version of iPhone OS that the device can be down
 -Credits-
 
 u/SilentHunterDEV- code.
+
+u/BJNFNE- code.
+
+
 
 u/SilentHunterDEV - Idea for the program and information regarding iPhone 2G serial numbers.
 
