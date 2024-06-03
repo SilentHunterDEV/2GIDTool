@@ -47,20 +47,21 @@ void importSerialNumber(char serialNumber[11]) {
     bool validInput = false;
     while (!validInput) {
         cout << "Enter the serial number (11 characters): ";
-        string input;
-        cin >> input;
+        string input_serialnumber;
+        getline(cin, input_serialnumber);
 
-        if (input.length() != 11) {
+        if (input_serialnumber.length() == 0) {
+            cout << "Error: Serial number cannot be empty." << endl;
+        } else if (input_serialnumber.length() != 11) {
             cout << "Error: Serial number must be 11 characters long." << endl;
         } else {
             for (int i = 0; i < 11; i++) {
-                serialNumber[i] = input[i];
+                serialNumber[i] = input_serialnumber[i];
             }
             validInput = true;
         }
     }
 }
-
 
 void displaySerialNumber(char serialNumber[11]) { // This function will print the serial number of the device
     std::cout << "Serial Number: ";
