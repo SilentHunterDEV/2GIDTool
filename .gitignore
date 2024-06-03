@@ -1,5 +1,8 @@
-
+# Compiled Windows Release
 2GIDTool.exe
+
+# Compiled Linux Release
+2GIDTool
 
 # MSVC related Files/Folders
 ./Debug
