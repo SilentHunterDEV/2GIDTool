@@ -1,7 +1,7 @@
 // iPhone 2G ID Tool v1.0
 // This tool will provide info about an iPhone 2G based on serial number
-// Idea credited to u/random_user_online
-// Initial code credited to u/randomNinja64
+// Idea credited to u/SilentHunterDEV
+// Initial code credited to u/SilentHunterDEV & u/BJNFNE
 
 #include <iostream>
 #include <string>
