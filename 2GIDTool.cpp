@@ -50,9 +50,9 @@ void importSerialNumber(char serialNumber[11]) {
         getline(cin, input_serialnumber);
 
         if (input_serialnumber.length() == 0) {
-            std::cout << "Error: Serial number cannot be empty.\f" << std::endl;
+            std::cout << "Error: Serial number cannot be empty.\n" << std::endl;
         } else if (input_serialnumber.length() != 11) {
-            std::cout << "Error: Serial number must be 11 characters long.\f" << std::endl;
+            std::cout << "Error: Serial number must be 11 characters long.\n" << std::endl;
         } else {
             for (int i = 0; i < 11; i++) {
                 serialNumber[i] = input_serialnumber[i];
