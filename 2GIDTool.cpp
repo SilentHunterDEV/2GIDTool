@@ -24,7 +24,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 
 	std::cout << "\b" << std::endl; // This Line is added for make space between Console before execution of 2GIDTool
 
-	std::cout << "iPhone2G ID Tool - iPhone v1.0\n" << std::endl;
+	std::cout << "iPhone2G ID Tool - iPhone v1.1\n" << std::endl;
 	std::cout << "This Utility will output basic information about an iPhone 2G based on its serial number\n" << std::endl;
 	std::cout << "Please input your iPhone's Serial number.\n" << "" << std::endl;
 	importSerialNumber(serialNumber); // Prompt the user for the Serial number
