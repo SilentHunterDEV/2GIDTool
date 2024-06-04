@@ -37,7 +37,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	std::cout << "Device information: \n" << std::endl;
 	displayInfo(serialNumber, prodWeek, prodYear);
 
-	std::cout << "Press enter to exit.\n" << std::endl;
+	std::cout << "Press enter to exit.\b" << std::endl;
 	std::cin.get();
 	return 0;
 }
@@ -45,7 +45,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 void importSerialNumber(char serialNumber[11]) {
     bool validInput = false;
     while (!validInput) {
-        std::cout << "Enter the serial number (11 characters): \n" << std::endl;
+        std::cout << "Enter the serial number (11 characters): \b" << std::endl;
         string input_serialnumber;
         getline(cin, input_serialnumber);
 
