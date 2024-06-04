@@ -33,7 +33,7 @@ u/Yupiter - testing
 - Windows
 - Linux
 - MacOS
-- Webinterface
+- Web Interface
 # Planned to be supported platforms
 - Android
 - iOS (eventually)
