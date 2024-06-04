@@ -8,3 +8,6 @@ debug:
 
 clean:
 	rm 2GIDTool
+
+clean_win:
+	rm 2GIDTool.exe
