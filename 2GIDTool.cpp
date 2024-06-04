@@ -125,7 +125,7 @@ int productionYear(char serialNumber[11]) { // This function will return the pro
 }
 
 float distgunishBootLoader(int prodWeek, int prodYear) { // This function wll return bootloader based on production week and year
-	if ((prodWeek >= 45 && prodYear == 2007) || (prodYear == 2008)) { //if production week 45 or above and production year is 2007, or if production year is 2008, bootloader us 4.6
+	if ((prodWeek >= 45 && prodYear == 2007) || (prodYear == 2008)) { // If production week 45 or above and production year is 2007, or if production year is 2008, bootloader us 4.6
 		return 4.6;
 	}
 	else {
