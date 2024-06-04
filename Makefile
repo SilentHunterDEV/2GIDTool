@@ -1,4 +1,4 @@
-# Makefile only for MacOS and Linux (g++)
+# Makefile only for MacOS and Linux and Windows (g++)
 
 2GIDTool:
 	g++ -O2 -o 2GIDTool 2GIDTool.cpp
