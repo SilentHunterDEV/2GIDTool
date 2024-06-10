@@ -21,7 +21,7 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 	char serialNumber[11] = { '0' }; // 11 character long array to store iPhone 2G serial number
 	int prodWeek = 0; // Create an int to store production week
 	int prodYear = 0; // Create an int to store production year
-
+		
 	std::cout << "\b" << std::endl; // This Line is added for make space between Console before execution of 2GIDTool
 
 	std::cout << "iPhone2G ID Tool - iPhone v1.1\n" << std::endl;
@@ -142,48 +142,47 @@ string calcMinOS(int prodWeek, int prodYear) { // This function will return mini
 	return "Firmware 1.1.1";
 	
 	}
-
 }
 
 string prodWeekToMonth(int prodWeek) { // This function will convert production week to month
 	if (prodWeek <= 5) {
-		return "January";
+	return "January";
 	}
 	if (prodWeek <= 9) {
-		return "February";
+	return "February";
 	}
 	if (prodWeek <= 13) {
-		return "March";
+	return "March";
 	}
 	if (prodWeek <= 18) {
-		return "April";
+	return "April";
 	}
 	if (prodWeek <= 22) {
-		return "May";
+	return "May";
 	}
 	if (prodWeek <= 26) {
-		return "June";
+	return "June";
 	}
 	if (prodWeek <= 31) {
-		return "July";
+	return "July";
 	}
 	if (prodWeek <= 35) {
-		return "August";
+	return "August";
 	}
 	if (prodWeek <= 39) {
-		return "September";
+	return "September";
 	}
 	if (prodWeek <= 44) {
-		return "October";
+	return "October";
 	}
 	if (prodWeek <= 48) {
-		return "November";
+	return "November";
 	}
 	if (prodWeek <= 52) {
-		return "December";
+	return "December";
 	}
 	else {
-		return "Unknown";
+	return "Unknown";
 	}
 	return 0;
 } // End of namespace
