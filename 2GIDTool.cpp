@@ -39,6 +39,8 @@ string prodWeekToMonth(int prodWeek); // This function will convert production w
 
 	std::cout << "Press enter to exit.\b" << std::endl;
 	std::cin.get();
+	std::cout << "Have a nice day!\n" << std::endl;
+	std::cout << " - 2GIDTool Team\n" << std::endl;
 	return 0;
 }
 
@@ -73,6 +75,7 @@ void displaySerialNumber(char serialNumber[11]) { // This function will print th
 void InvalidErrorHandler() {
 	std::cout << "Error: Invalid or unknown Serial number.\n " << std::endl;
 	std::cout << "If you believe this is in error, Please contact SilentHunterDEV or BJNFNE on Discord over an Direct Message.\n";
+	std::cout << "If the Desktop application don't work for you, Please consider then to try out our Web based application of 2GIDTool\n";
 	return;
 }
 
