@@ -34,6 +34,3 @@ u/Yupiter - testing
 - Linux
 - MacOS
 - Web Interface
-# Planned to be supported platforms
-- Android
-- iOS (eventually)
