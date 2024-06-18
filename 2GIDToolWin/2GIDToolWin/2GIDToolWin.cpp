@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <iomanip> 
 #include <shlobj.h>
 
 // Global variables
@@ -124,61 +125,71 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
 
 // Function to get the directory of the executable
-    std::wstring GetExecutableDirectory() {
+std::wstring GetExecutableDirectory() {
     wchar_t buffer[MAX_PATH];
     GetModuleFileName(NULL, buffer, MAX_PATH);
     std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
     return std::wstring(buffer).substr(0, pos);
 }
 
-    // Function to display device information in MessageBox and write to devinfo.txt
-    void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
-        std::wstring info;
-        info += L"Device Information:\n\n";
+// Function to display device information in MessageBox and write to devinfo.txt
+void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
+    std::wstring info;
+    info += L"Device Information:\n\n";
 
-        if (prodWeek == 0 || prodYear == 0) {
-            info += L"Error: Invalid or unknown Serial number.\n";
-        }
-        else {
-            info += L"Serial Number: ";
-            info += std::wstring(serialNumber.begin(), serialNumber.end()) + L"\n";
-            info += L"Production Week: " + std::to_wstring(prodWeek) + L"\n";
-            info += L"Production Month / Year: " + prodWeekToMonth(prodWeek) + L" " + std::to_wstring(prodYear) + L"\n";
-            info += L"Original Bootloader Version: " + std::to_wstring(distgunishBootLoader(prodWeek, prodYear)) + L"\n";
-            info += L"Minimum OS Version: " + calcMinOS(prodWeek, prodYear) + L"\n";
-        }
-
-        // Display information in a MessageBox
-        MessageBox(hwnd, info.c_str(), L"Device Information", MB_OK);
-
-        // Get executable directory
-        std::wstring execDir = GetExecutableDirectory();
-
-        // Construct path for devinfo.txt next to the executable
-        std::wstring filePath = execDir + L"\\devinfo.txt";
-
-        // Write information to devinfo.txt file using Windows API
-        HANDLE hFile = CreateFile(filePath.c_str(),            // File path
-            GENERIC_WRITE,               // Open for writing
-            0,                           // Do not share
-            NULL,                        // Default security
-            CREATE_ALWAYS,               // Always create new file
-            FILE_ATTRIBUTE_NORMAL,       // Normal file
-            NULL);                       // No template file
-
-        if (hFile == INVALID_HANDLE_VALUE) {
-            MessageBox(NULL, L"Failed to create devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
-            return;
-        }
-
-        DWORD bytesWritten;
-        BOOL result = WriteFile(hFile, info.c_str(), static_cast<DWORD>(info.size() * sizeof(wchar_t)), &bytesWritten, NULL);
-        if (!result) {
-            MessageBox(NULL, L"Failed to write to devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
-        }
-
-        CloseHandle(hFile);
+    if (prodWeek == 0 || prodYear == 0) {
+        info += L"Error: Invalid or unknown Serial number.\n";
     }
+    else {
+        info += L"Serial Number: ";
+        info += std::wstring(serialNumber.begin(), serialNumber.end()) + L"\n";
+        info += L"Production Week: " + std::to_wstring(prodWeek) + L"\n";
+        info += L"Production Month / Year: " + prodWeekToMonth(prodWeek) + L" " + std::to_wstring(prodYear) + L"\n";
+
+        // Get the bootloader version and format it
+        float bootloaderVersion = distgunishBootLoader(prodWeek, prodYear);
+        std::wstringstream ss;
+        ss << std::fixed << std::setprecision(3) << bootloaderVersion;
+        std::wstring formattedBootloader = ss.str();
+
+        info += L"Original Bootloader Version: " + formattedBootloader + L"\n";
+        info += L"Minimum OS Version: " + calcMinOS(prodWeek, prodYear) + L"\n";
+    }
+
+    // Display information in a MessageBox
+    MessageBox(hwnd, info.c_str(), L"Device Information", MB_OK);
+
+    // Get executable directory
+    std::wstring execDir = GetExecutableDirectory();
+
+    // Construct path for devinfo.txt next to the executable
+    std::wstring filePath = execDir + L"\\devinfo.txt";
+
+    // Write information to devinfo.txt file using Windows API
+    HANDLE hFile = CreateFile(filePath.c_str(),            // File path
+        GENERIC_WRITE,               // Open for writing
+        0,                           // Do not share
+        NULL,                        // Default security
+        CREATE_ALWAYS,               // Always create new file
+        FILE_ATTRIBUTE_NORMAL,       // Normal file
+        NULL);                       // No template file
+
+    if (hFile == INVALID_HANDLE_VALUE) {
+        MessageBox(NULL, L"Failed to create devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+        return;
+    }
+
+    std::wstring outputText = info;
+
+    // Write information to devinfo.txt file
+    DWORD bytesWritten;
+    BOOL result = WriteFile(hFile, outputText.c_str(), static_cast<DWORD>(outputText.size() * sizeof(wchar_t)), &bytesWritten, NULL);
+    if (!result) {
+        MessageBox(NULL, L"Failed to write to devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+    }
+
+    CloseHandle(hFile);
+}
 
 void InvalidErrorHandler(HWND hwnd) {
     MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error, please contact SilentHunterDEV or BJNFNE on Discord over a Direct Message.\nIf the Desktop application doesn't work for you, please consider trying out our Web-based application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
