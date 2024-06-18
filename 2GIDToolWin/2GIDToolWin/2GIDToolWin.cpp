@@ -24,6 +24,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
     WNDCLASS wc = { };
 
+    wc.style = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
@@ -34,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
         0,
         CLASS_NAME,
         L"iPhone2G ID Tool",
-        WS_OVERLAPPEDWINDOW,
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
         CW_USEDEFAULT, CW_USEDEFAULT, 320, 200,
         NULL,
         NULL,
@@ -45,6 +46,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     if (hwnd == NULL) {
         return 0;
     }
+
+    // Disable resizing
+    SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~(WS_MAXIMIZEBOX | WS_SIZEBOX));
 
     ShowWindow(hwnd, nCmdShow);
 
@@ -76,7 +80,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
         CreateWindow(L"BUTTON", L"Submit",
             WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-            110, 40, 100, 20,
+            110, 70, 100, 20,
             hwnd, (HMENU)2, NULL, NULL);
 
         break;
@@ -122,7 +126,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     }
     return 0;
 }
-
 
 // Function to get the directory of the executable
 std::wstring GetExecutableDirectory() {
