@@ -35,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
         CLASS_NAME,
         L"iPhone2G ID Tool",
         WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, 500, 300,
+        CW_USEDEFAULT, CW_USEDEFAULT, 320, 200,
         NULL,
         NULL,
         hInstance,
