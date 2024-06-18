@@ -1,8 +1,11 @@
 #include <windows.h>
 #include <string>
-#include <iostream>
 #include <sstream>
-#include <vector>
+#include <fstream>
+#include <shlobj.h>
+
+// Global variables
+HINSTANCE hInst; // Instance handle
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -15,6 +18,7 @@ std::wstring prodWeekToMonth(int prodWeek);
 void InvalidErrorHandler(HWND hwnd);
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
+    hInst = hInstance; // Store instance handle
     const wchar_t CLASS_NAME[] = L"iPhone2G ID Tool";
 
     WNDCLASS wc = { };
@@ -99,7 +103,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             prodWeek = productionWeek(serialNumber);
             prodYear = productionYear(serialNumber);
 
-            displayInfo(hwnd, serialNumber, prodWeek, prodYear);
+            if (prodWeek == 0 || prodYear == 0) {
+                InvalidErrorHandler(hwnd);
+            }
+            else {
+                displayInfo(hwnd, serialNumber, prodWeek, prodYear);
+            }
         }
         break;
     }
@@ -113,27 +122,66 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     return 0;
 }
 
-void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
-    std::wstringstream info;
-    info << L"Serial Number: " << std::wstring(serialNumber.begin(), serialNumber.end()) << L"\n";
 
-    if (prodWeek == 0 || prodYear == 0) {
-        InvalidErrorHandler(hwnd);
-        return;
-    }
-    else {
-        info << L"Production Week: " << prodWeek << L"\n";
-        info << L"Production Month / Year: " << prodWeekToMonth(prodWeek) << L" " << prodYear << L"\n";
-    }
-
-    info << L"Original Bootloader Version: " << distgunishBootLoader(prodWeek, prodYear) << L"\n";
-    info << L"Minimum OS Version: " << calcMinOS(prodWeek, prodYear) << L"\n";
-
-    MessageBox(hwnd, info.str().c_str(), L"Device Information", MB_OK);
+// Function to get the directory of the executable
+    std::wstring GetExecutableDirectory() {
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
+    return std::wstring(buffer).substr(0, pos);
 }
 
+    // Function to display device information in MessageBox and write to devinfo.txt
+    void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
+        std::wstring info;
+        info += L"Device Information:\n\n";
+
+        if (prodWeek == 0 || prodYear == 0) {
+            info += L"Error: Invalid or unknown Serial number.\n";
+        }
+        else {
+            info += L"Serial Number: ";
+            info += std::wstring(serialNumber.begin(), serialNumber.end()) + L"\n";
+            info += L"Production Week: " + std::to_wstring(prodWeek) + L"\n";
+            info += L"Production Month / Year: " + prodWeekToMonth(prodWeek) + L" " + std::to_wstring(prodYear) + L"\n";
+            info += L"Original Bootloader Version: " + std::to_wstring(distgunishBootLoader(prodWeek, prodYear)) + L"\n";
+            info += L"Minimum OS Version: " + calcMinOS(prodWeek, prodYear) + L"\n";
+        }
+
+        // Display information in a MessageBox
+        MessageBox(hwnd, info.c_str(), L"Device Information", MB_OK);
+
+        // Get executable directory
+        std::wstring execDir = GetExecutableDirectory();
+
+        // Construct path for devinfo.txt next to the executable
+        std::wstring filePath = execDir + L"\\devinfo.txt";
+
+        // Write information to devinfo.txt file using Windows API
+        HANDLE hFile = CreateFile(filePath.c_str(),            // File path
+            GENERIC_WRITE,               // Open for writing
+            0,                           // Do not share
+            NULL,                        // Default security
+            CREATE_ALWAYS,               // Always create new file
+            FILE_ATTRIBUTE_NORMAL,       // Normal file
+            NULL);                       // No template file
+
+        if (hFile == INVALID_HANDLE_VALUE) {
+            MessageBox(NULL, L"Failed to create devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+            return;
+        }
+
+        DWORD bytesWritten;
+        BOOL result = WriteFile(hFile, info.c_str(), static_cast<DWORD>(info.size() * sizeof(wchar_t)), &bytesWritten, NULL);
+        if (!result) {
+            MessageBox(NULL, L"Failed to write to devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+        }
+
+        CloseHandle(hFile);
+    }
+
 void InvalidErrorHandler(HWND hwnd) {
-    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\n If you believe this is in error, Please contact SilentHunterDEV or BJNFNE on Discord over a Direct Message.\n If the Desktop application doesn't work for you, Please consider trying out our Web-based application of 2GIDTool", L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error, please contact SilentHunterDEV or BJNFNE on Discord over a Direct Message.\nIf the Desktop application doesn't work for you, please consider trying out our Web-based application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
 }
 
 int productionWeek(const std::string& serialNumber) {
@@ -179,5 +227,7 @@ std::wstring prodWeekToMonth(int prodWeek) {
     if (prodWeek <= 44) return L"October";
     if (prodWeek <= 48) return L"November";
     if (prodWeek <= 52) return L"December";
+
     return L"Unknown";
+
 }
