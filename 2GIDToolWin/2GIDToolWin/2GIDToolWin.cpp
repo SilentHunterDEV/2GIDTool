@@ -17,6 +17,7 @@ float distgunishBootLoader(int prodWeek, int prodYear);
 std::wstring calcMinOS(int prodWeek, int prodYear);
 std::wstring prodWeekToMonth(int prodWeek);
 void InvalidErrorHandler(HWND hwnd);
+void Credits(HWND hwnd);
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
     hInst = hInstance; // Store instance handle
@@ -35,7 +36,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
         0,
         CLASS_NAME,
         L"iPhone2G ID Tool",
-        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZE,
         CW_USEDEFAULT, CW_USEDEFAULT, 320, 200,
         NULL,
         NULL,
@@ -118,6 +119,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         break;
     }
     case WM_DESTROY: {
+        Credits(hwnd);
         PostQuitMessage(0);
         return 0;
     }
@@ -195,7 +197,7 @@ void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int p
 }
 
 void InvalidErrorHandler(HWND hwnd) {
-    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error, please contact SilentHunterDEV or BJNFNE on Discord over a Direct Message.\nIf the Desktop application doesn't work for you, please consider trying out our Web-based application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\b If the Desktop application doesn't work for you,\b Please consider trying out our Web-based application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
 }
 
 int productionWeek(const std::string& serialNumber) {
@@ -244,4 +246,8 @@ std::wstring prodWeekToMonth(int prodWeek) {
 
     return L"Unknown";
 
+}
+
+void Credits(HWND hwnd) {
+    MessageBox(hwnd, L"Credits: SilentHunterDEV - development / BJNFNE Code improvements", L"2GIDTool", MB_OK | MB_HELP);
 }
