@@ -64,7 +64,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
     switch (uMsg) {
     case WM_CREATE: {
-        CreateWindow(L"STATIC", L"Enter the serial number (11 characters):",
+        CreateWindow(L"STATIC", L"Enter the serial number:",
             WS_VISIBLE | WS_CHILD,
             10, 10, 200, 20,
             hwnd, NULL, NULL, NULL);
@@ -76,7 +76,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 
         CreateWindow(L"BUTTON", L"Submit",
             WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-            220, 40, 100, 20,
+            110, 40, 100, 20,
             hwnd, (HMENU)2, NULL, NULL);
 
         break;
