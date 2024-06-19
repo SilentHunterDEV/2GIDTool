@@ -191,7 +191,7 @@ LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
             WS_EX_CLIENTEDGE,
             L"EDIT",
             info.c_str(),
-            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL,
+            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL | ES_READONLY,
             10, 10, 370, 240,
             hwnd,
             NULL,
@@ -216,7 +216,7 @@ LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 }
 
 void InvalidErrorHandler(HWND hwnd) {
-    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\b If the Desktop application doesn't work for you,\b Please consider trying out our Web-based Application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\f If the Desktop application doesn't work for you,\b Please consider trying out our Web-based Application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
 }
 
 int productionWeek(const std::string& serialNumber) {
