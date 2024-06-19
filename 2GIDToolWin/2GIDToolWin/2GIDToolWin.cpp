@@ -2,13 +2,14 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <iomanip> 
+#include <iomanip>
 #include <shlobj.h>
 
 // Global variables
 HINSTANCE hInst; // Instance handle
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear);
 int productionWeek(const std::string& serialNumber);
@@ -18,6 +19,7 @@ std::wstring calcMinOS(int prodWeek, int prodYear);
 std::wstring prodWeekToMonth(int prodWeek);
 void InvalidErrorHandler(HWND hwnd);
 void Credits(HWND hwnd);
+std::wstring ReadDevInfo();
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
     hInst = hInstance; // Store instance handle
@@ -137,63 +139,80 @@ std::wstring GetExecutableDirectory() {
     return std::wstring(buffer).substr(0, pos);
 }
 
-// Function to display device information in MessageBox and write to devinfo.txt
-void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
-    std::wstring info;
-    info += L"Device Information:\n\n";
-
-    if (prodWeek == 0 || prodYear == 0) {
-        info += L"Error: Invalid or unknown Serial number.\n";
-    }
-    else {
-        info += L"Serial Number: ";
-        info += std::wstring(serialNumber.begin(), serialNumber.end()) + L"\n";
-        info += L"Production Week: " + std::to_wstring(prodWeek) + L"\n";
-        info += L"Production Month / Year: " + prodWeekToMonth(prodWeek) + L" " + std::to_wstring(prodYear) + L"\n";
-
-        // Get the bootloader version and format it
-        float bootloaderVersion = distgunishBootLoader(prodWeek, prodYear);
-        std::wstringstream ss;
-        ss << std::fixed << std::setprecision(3) << bootloaderVersion;
-        std::wstring formattedBootloader = ss.str();
-
-        info += L"Original Bootloader Version: " + formattedBootloader + L"\n";
-        info += L"Minimum OS Version: " + calcMinOS(prodWeek, prodYear) + L"\n";
-    }
-
-    // Display information in a MessageBox
-    MessageBox(hwnd, info.c_str(), L"Device Information", MB_OK);
-
-    // Get executable directory
+// Function to read the contents of devinfo.txt
+std::wstring ReadDevInfo() {
     std::wstring execDir = GetExecutableDirectory();
-
-    // Construct path for devinfo.txt next to the executable
     std::wstring filePath = execDir + L"\\devinfo.txt";
 
-    // Write information to devinfo.txt file using Windows API
-    HANDLE hFile = CreateFile(filePath.c_str(),            // File path
-        GENERIC_WRITE,               // Open for writing
-        0,                           // Do not share
-        NULL,                        // Default security
-        CREATE_ALWAYS,               // Always create new file
-        FILE_ATTRIBUTE_NORMAL,       // Normal file
-        NULL);                       // No template file
+    std::wifstream file(filePath);
+    if (!file.is_open()) {
+        return L"Failed to read devinfo.txt!";
+    }
 
-    if (hFile == INVALID_HANDLE_VALUE) {
-        MessageBox(NULL, L"Failed to create devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+    std::wstringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
+}
+
+// Function to display device information in a custom window
+void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
+    const wchar_t INFO_CLASS_NAME[] = L"DeviceInfoClass";
+
+    WNDCLASS wc = { 0 };
+    wc.lpfnWndProc = InfoWindowProc;
+    wc.hInstance = hInst;
+    wc.lpszClassName = INFO_CLASS_NAME;
+
+    RegisterClass(&wc);
+
+    HWND infoHwnd = CreateWindowEx(
+        0,
+        INFO_CLASS_NAME,
+        L"Device Information",
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+        CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
+        hwnd, NULL, hInst, NULL
+    );
+
+    if (infoHwnd == NULL) {
+        MessageBox(hwnd, L"Failed to create information window.", L"Error", MB_OK | MB_ICONERROR);
         return;
     }
 
-    std::wstring outputText = info;
+    ShowWindow(infoHwnd, SW_SHOW);
+}
 
-    // Write information to devinfo.txt file
-    DWORD bytesWritten;
-    BOOL result = WriteFile(hFile, outputText.c_str(), static_cast<DWORD>(outputText.size() * sizeof(wchar_t)), &bytesWritten, NULL);
-    if (!result) {
-        MessageBox(NULL, L"Failed to write to devinfo.txt!", L"Error", MB_OK | MB_ICONERROR);
+LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+    case WM_CREATE: {
+        std::wstring info = ReadDevInfo();
+
+        HWND hEdit = CreateWindowEx(
+            WS_EX_CLIENTEDGE,
+            L"EDIT",
+            info.c_str(),
+            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL,
+            10, 10, 370, 240,
+            hwnd,
+            NULL,
+            hInst,
+            NULL
+        );
+
+        if (hEdit == NULL) {
+            MessageBox(hwnd, L"Failed to create edit control.", L"Error", MB_OK | MB_ICONERROR);
+        }
+
+        break;
     }
-
-    CloseHandle(hFile);
+    case WM_DESTROY: {
+        PostQuitMessage(0);
+        break;
+    }
+    default:
+        return DefWindowProc(hwnd, uMsg, wParam, lParam);
+    }
+    return 0;
 }
 
 void InvalidErrorHandler(HWND hwnd) {
@@ -245,7 +264,6 @@ std::wstring prodWeekToMonth(int prodWeek) {
     if (prodWeek <= 52) return L"December";
 
     return L"Unknown";
-
 }
 
 void Credits(HWND hwnd) {
