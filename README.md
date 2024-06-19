@@ -32,5 +32,3 @@ u/Yupiter - testing
 # Support platforms
 - Windows
 - Linux
-- MacOS
-- Web Interface
