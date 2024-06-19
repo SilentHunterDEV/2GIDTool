@@ -249,5 +249,5 @@ std::wstring prodWeekToMonth(int prodWeek) {
 }
 
 void Credits(HWND hwnd) {
-    MessageBox(hwnd, L"Credits:\n SilentHunterDEV - development\n BJNFNE Code improvements\n JustGhost101 Icon design\n", L"2GIDTool v2.0", MB_ICONASTERISK);
+    MessageBox(hwnd, L"Credits:\n SilentHunterDEV - Development\n BJNFNE Code improvements\n JustGhost101 Icon design\n", L"2GIDTool v2.0", MB_ICONASTERISK);
 }
