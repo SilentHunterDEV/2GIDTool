@@ -14,7 +14,7 @@ LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear);
 int productionWeek(const std::string& serialNumber);
 int productionYear(const std::string& serialNumber);
-float distgunishBootLoader(int prodWeek, int prodYear);
+float distinguishBootLoader(int prodWeek, int prodYear);
 std::wstring calcMinOS(int prodWeek, int prodYear);
 std::wstring prodWeekToMonth(int prodWeek);
 void InvalidErrorHandler(HWND hwnd);
@@ -154,69 +154,37 @@ std::wstring ReadDevInfo() {
     return buffer.str();
 }
 
-// Function to display device information in a custom window
-void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
-    const wchar_t INFO_CLASS_NAME[] = L"DeviceInfoClass";
+// Function to write device information to devinfo.txt
+void WriteDevInfo(const std::string& serialNumber, int prodWeek, int prodYear) {
+    std::wstring execDir = GetExecutableDirectory();
+    std::wstring filePath = execDir + L"\\devinfo.txt";
 
-    WNDCLASS wc = { 0 };
-    wc.lpfnWndProc = InfoWindowProc;
-    wc.hInstance = hInst;
-    wc.lpszClassName = INFO_CLASS_NAME;
-
-    RegisterClass(&wc);
-
-    HWND infoHwnd = CreateWindowEx(
-        0,
-        INFO_CLASS_NAME,
-        L"Device Information",
-        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-        CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
-        hwnd, NULL, hInst, NULL
-    );
-
-    if (infoHwnd == NULL) {
-        MessageBox(hwnd, L"Failed to create information window.", L"Error", MB_OK | MB_ICONERROR);
-        return;
+    std::wofstream file(filePath);
+    if (file.is_open()) {
+        file << L"Serial Number: " << std::wstring(serialNumber.begin(), serialNumber.end()) << L"\n";
+        file << L"Production Week: " << prodWeek << L"\n";
+        file << L"Production Year: " << prodYear << L"\n";
+        file << L"Boot Loader Version: " << distinguishBootLoader(prodWeek, prodYear) << L"\n";
+        file << L"Minimum OS: " << calcMinOS(prodWeek, prodYear) << L"\n";
+        file << L"Production Month: " << prodWeekToMonth(prodWeek) << L"\n";
+        file.close();
     }
-
-    ShowWindow(infoHwnd, SW_SHOW);
 }
 
-LRESULT CALLBACK InfoWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    switch (uMsg) {
-    case WM_CREATE: {
-        std::wstring info = ReadDevInfo();
+// Function to display device information in a custom window
+void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
+    // Write device information to devinfo.txt
+    WriteDevInfo(serialNumber, prodWeek, prodYear);
 
-        HWND hEdit = CreateWindowEx(
-            WS_EX_CLIENTEDGE,
-            L"EDIT",
-            info.c_str(),
-            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL | ES_READONLY,
-            10, 10, 370, 240,
-            hwnd,
-            NULL,
-            hInst,
-            NULL
-        );
+    // Inform user
+    MessageBox(hwnd, L"Device information saved to devinfo.txt. Opening Notepad...", L"Information", MB_OK | MB_ICONINFORMATION);
 
-        if (hEdit == NULL) {
-            MessageBox(hwnd, L"Failed to create edit control.", L"Error", MB_OK | MB_ICONERROR);
-        }
-
-        break;
-    }
-    case WM_DESTROY: {
-        PostQuitMessage(0);
-        break;
-    }
-    default:
-        return DefWindowProc(hwnd, uMsg, wParam, lParam);
-    }
-    return 0;
+    // Open devinfo.txt using Notepad
+    ShellExecute(NULL, L"open", L"notepad.exe", (GetExecutableDirectory() + L"\\devinfo.txt").c_str(), NULL, SW_SHOWDEFAULT);
 }
 
 void InvalidErrorHandler(HWND hwnd) {
-    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\f If the Desktop application doesn't work for you,\b Please consider trying out our Web-based Application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.", L"Error", MB_OK | MB_ICONERROR);
 }
 
 int productionWeek(const std::string& serialNumber) {
@@ -235,7 +203,7 @@ int productionYear(const std::string& serialNumber) {
     }
 }
 
-float distgunishBootLoader(int prodWeek, int prodYear) {
+float distinguishBootLoader(int prodWeek, int prodYear) {
     if ((prodWeek >= 45 && prodYear == 2007) || (prodYear == 2008)) {
         return 4.6f;
     }
