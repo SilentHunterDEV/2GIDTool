@@ -21,7 +21,7 @@ void Credits(HWND hwnd);
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
     hInst = hInstance; // Store instance handle
-    const wchar_t CLASS_NAME[] = L"iPhone2G ID Tool";
+    const wchar_t CLASS_NAME[] = L"iPhone2G ID Tool v2.0";
 
     WNDCLASS wc = { };
 
@@ -35,7 +35,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     HWND hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
-        L"iPhone2G ID Tool",
+        L"iPhone2G ID Tool v2.0",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZE,
         CW_USEDEFAULT, CW_USEDEFAULT, 320, 200,
         NULL,
@@ -197,7 +197,7 @@ void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int p
 }
 
 void InvalidErrorHandler(HWND hwnd) {
-    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\b If the Desktop application doesn't work for you,\b Please consider trying out our Web-based application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
+    MessageBox(hwnd, L"Error: Invalid or unknown Serial number.\nIf you believe this is in error,\n Please contact SilentHunterDEV or BJNFNE on Discord over a direct message.\b If the Desktop application doesn't work for you,\b Please consider trying out our Web-based Application of 2GIDTool.", L"Error", MB_OK | MB_ICONERROR);
 }
 
 int productionWeek(const std::string& serialNumber) {
@@ -249,5 +249,5 @@ std::wstring prodWeekToMonth(int prodWeek) {
 }
 
 void Credits(HWND hwnd) {
-    MessageBox(hwnd, L"Credits: SilentHunterDEV - development / BJNFNE Code improvements", L"2GIDTool", MB_ICONASTERISK);
+    MessageBox(hwnd, L"Credits: SilentHunterDEV - development / BJNFNE Code improvements", L"2GIDTool v2.0", MB_ICONASTERISK);
 }
