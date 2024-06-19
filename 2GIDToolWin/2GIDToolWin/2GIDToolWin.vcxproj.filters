@@ -45,5 +45,8 @@
     <Image Include="2GIDToolWin.ico">
       <Filter>Ressourcendateien</Filter>
     </Image>
+    <Image Include="..\..\..\..\Downloads\oie_3IgRRe0gRbYq.ico">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>

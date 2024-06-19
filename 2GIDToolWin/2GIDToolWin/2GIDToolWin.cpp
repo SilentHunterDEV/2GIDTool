@@ -37,7 +37,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
         CLASS_NAME,
         L"iPhone2G ID Tool v2.0",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZE,
-        CW_USEDEFAULT, CW_USEDEFAULT, 320, 200,
+        CW_USEDEFAULT, CW_USEDEFAULT, 320, 250,
         NULL,
         NULL,
         hInstance,
@@ -71,17 +71,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     case WM_CREATE: {
         CreateWindow(L"STATIC", L"Enter the serial number:",
             WS_VISIBLE | WS_CHILD,
-            10, 10, 200, 20,
+            40, 20, 200, 20,
             hwnd, NULL, NULL, NULL);
 
         CreateWindow(L"EDIT", NULL,
             WS_VISIBLE | WS_CHILD | WS_BORDER | ES_AUTOHSCROLL,
-            10, 40, 200, 20,
+            40, 40, 200, 20,
             hwnd, (HMENU)1, NULL, NULL);
 
         CreateWindow(L"BUTTON", L"Submit",
             WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-            110, 70, 100, 20,
+            80, 70, 100, 20,
             hwnd, (HMENU)2, NULL, NULL);
 
         break;

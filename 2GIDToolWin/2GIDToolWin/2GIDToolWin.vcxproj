@@ -139,6 +139,7 @@
     <ResourceCompile Include="2GIDToolWin.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\oie_3IgRRe0gRbYq.ico" />
     <Image Include="2GIDToolWin.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
