@@ -163,10 +163,10 @@ void WriteDevInfo(const std::string& serialNumber, int prodWeek, int prodYear) {
     if (file.is_open()) {
         file << L"Serial Number: " << std::wstring(serialNumber.begin(), serialNumber.end()) << L"\n";
         file << L"Production Week: " << prodWeek << L"\n";
+        file << L"Production Month: " << prodWeekToMonth(prodWeek) << L"\n";
         file << L"Production Year: " << prodYear << L"\n";
         file << L"Boot Loader Version: " << distinguishBootLoader(prodWeek, prodYear) << L"\n";
         file << L"Minimum OS: " << calcMinOS(prodWeek, prodYear) << L"\n";
-        file << L"Production Month: " << prodWeekToMonth(prodWeek) << L"\n";
         file.close();
     }
 }
