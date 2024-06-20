@@ -1,4 +1,4 @@
-# iPhone 2G ID Tool v2.0
+# iPhone 2G ID Tool v2.1
 A tool to provide information about an iPhone 2G based on serial number.
 
 -Usage-
