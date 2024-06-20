@@ -72,7 +72,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     switch (uMsg) {
     case WM_CREATE: {
         CreateWindow(L"STATIC", L"Enter the serial number:",
-            WS_VISIBLE | WS_CHILD,
+            WS_VISIBLE | WS_CHILD | WS_BORDER,
             40, 20, 200, 20,
             hwnd, NULL, NULL, NULL);
 
