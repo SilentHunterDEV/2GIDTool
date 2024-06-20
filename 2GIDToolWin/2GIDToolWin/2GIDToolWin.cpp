@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <Winuser.h>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -19,11 +20,11 @@ std::wstring calcMinOS(int prodWeek, int prodYear);
 std::wstring prodWeekToMonth(int prodWeek);
 void InvalidErrorHandler(HWND hwnd);
 void Credits(HWND hwnd);
-std::wstring ReadDevInfo();
+std::wstring ReadPhoneInfo();
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
     hInst = hInstance; // Store instance handle
-    const wchar_t CLASS_NAME[] = L"iPhone2G ID Tool v2.0";
+    const wchar_t CLASS_NAME[] = L"iPhone2G ID Tool v2.1";
 
     WNDCLASS wc = { };
 
@@ -37,7 +38,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     HWND hwnd = CreateWindowEx(
         0,
         CLASS_NAME,
-        L"iPhone2G ID Tool v2.0",
+        L"iPhone2G ID Tool v2.1",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZE,
         CW_USEDEFAULT, CW_USEDEFAULT, 320, 250,
         NULL,
@@ -72,7 +73,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     switch (uMsg) {
     case WM_CREATE: {
         CreateWindow(L"STATIC", L"Enter the serial number:",
-            WS_VISIBLE | WS_CHILD | WS_BORDER,
+            WS_VISIBLE | WS_CHILD | WS_BORDER | WS_EX_TRANSPARENT,
             40, 20, 200, 20,
             hwnd, NULL, NULL, NULL);
 
@@ -139,14 +140,14 @@ std::wstring GetExecutableDirectory() {
     return std::wstring(buffer).substr(0, pos);
 }
 
-// Function to read the contents of devinfo.txt
+// Function to read the contents of phoneinfo.txt
 std::wstring ReadDevInfo() {
     std::wstring execDir = GetExecutableDirectory();
-    std::wstring filePath = execDir + L"\\devinfo.txt";
+    std::wstring filePath = execDir + L"\\phoneinfo.txt";
 
     std::wifstream file(filePath);
     if (!file.is_open()) {
-        return L"Failed to read devinfo.txt!";
+        return L"Failed to read phoneinfo.txt!";
     }
 
     std::wstringstream buffer;
@@ -154,10 +155,10 @@ std::wstring ReadDevInfo() {
     return buffer.str();
 }
 
-// Function to write device information to devinfo.txt
-void WriteDevInfo(const std::string& serialNumber, int prodWeek, int prodYear) {
+// Function to write device information to phoneinfo.txt
+void WritePhoneInfo(const std::string& serialNumber, int prodWeek, int prodYear) {
     std::wstring execDir = GetExecutableDirectory();
-    std::wstring filePath = execDir + L"\\devinfo.txt";
+    std::wstring filePath = execDir + L"\\phoneinfo.txt";
 
     std::wofstream file(filePath);
     if (file.is_open()) {
@@ -173,14 +174,14 @@ void WriteDevInfo(const std::string& serialNumber, int prodWeek, int prodYear) {
 
 // Function to display device information in a custom window
 void displayInfo(HWND hwnd, const std::string& serialNumber, int prodWeek, int prodYear) {
-    // Write device information to devinfo.txt
-    WriteDevInfo(serialNumber, prodWeek, prodYear);
+    // Write device information to phoneinfo.txt
+    WritePhoneInfo(serialNumber, prodWeek, prodYear);
 
     // Inform user
-    MessageBox(hwnd, L"Device information saved to devinfo.txt. Opening Notepad...", L"Information", MB_OK | MB_ICONINFORMATION);
+    MessageBox(hwnd, L"Device information saved to phoneinfo.txt. Opening Notepad...", L"Information", MB_OK | MB_ICONINFORMATION);
 
     // Open devinfo.txt using Notepad
-    ShellExecute(NULL, L"open", L"notepad.exe", (GetExecutableDirectory() + L"\\devinfo.txt").c_str(), NULL, SW_SHOWDEFAULT);
+    ShellExecute(NULL, L"open", L"notepad.exe", (GetExecutableDirectory() + L"\\phoneinfo.txt").c_str(), NULL, SW_SHOWDEFAULT);
 }
 
 void InvalidErrorHandler(HWND hwnd) {
